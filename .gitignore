@@ -1,0 +1,20 @@
+# Compilación Maven / Java
+target/
+**/target/
+*.jar
+*.war
+*.ear
+*.class
+*.log
+
+# IDEs y editores
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
