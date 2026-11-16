@@ -1,0 +1,14 @@
+# Solicitud de almacenamiento persistente para sobrevivir reinicios del pod de MongoDB
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+  namespace: practica-s11
+  labels:
+    app: mongo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

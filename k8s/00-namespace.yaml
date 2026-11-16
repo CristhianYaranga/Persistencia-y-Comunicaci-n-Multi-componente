@@ -1,0 +1,8 @@
+# Espacio de nombres lógico para aislar todos los recursos de la práctica
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: practica-s11
+  labels:
+    env: laboratorio
+    curso: cloud-devops
