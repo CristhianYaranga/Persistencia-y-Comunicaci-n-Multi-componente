@@ -1,0 +1,32 @@
+=== 1. ESTADO DE PODS Y DATOS ANTES DE ELIMINAR EL POD DE MONGODB ===
+$ kubectl get pods -n practica-s11 -o wide
+NAME                                  READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+backend-deployment-7b4b86dc4f-2gv8v   1/1     Running   0          3m4s    10.244.0.9   minikube   <none>           <none>
+mongo-deployment-59757865cf-t74fn     1/1     Running   0          3m37s   10.244.0.8   minikube   <none>           <none>
+
+$ curl.exe -i -s -X GET "http://127.0.0.1:8080/api/productos"
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: application/json
+
+[{"id":"6afb3ae13449bc40938b46a9","nombre":"Laptop Lenovo ThinkPad P16","precio":1850.5},{"id":"6afb3ae23449bc40938b46aa","nombre":"Monitor Dell UltraSharp 27","precio":499.99}]
+
+=== 2. ELIMINACIÓN DEL POD DE MONGODB Y ESPERA DE RECREACIÓN ===
+$ kubectl delete pod -l app=mongo -n practica-s11
+pod "mongo-deployment-59757865cf-t74fn" deleted from practica-s11 namespace
+
+$ kubectl wait --for=condition=ready pod -l app=mongo -n practica-s11 --timeout=120s
+pod/mongo-deployment-59757865cf-7f7bz condition met
+
+=== 3. ESTADO DE PODS Y DATOS DESPUÉS DE RECREAR EL POD DE MONGODB ===
+$ kubectl get pods -n practica-s11 -o wide
+NAME                                  READY   STATUS    RESTARTS   AGE    IP            NODE       NOMINATED NODE   READINESS GATES
+backend-deployment-7b4b86dc4f-2gv8v   1/1     Running   0          3m6s   10.244.0.9    minikube   <none>           <none>
+mongo-deployment-59757865cf-7f7bz     1/1     Running   0          2s     10.244.0.10   minikube   <none>           <none>
+
+$ curl.exe -i -s -X GET "http://127.0.0.1:8080/api/productos"
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: application/json
+
+[{"id":"6afb3ae13449bc40938b46a9","nombre":"Laptop Lenovo ThinkPad P16","precio":1850.5},{"id":"6afb3ae23449bc40938b46aa","nombre":"Monitor Dell UltraSharp 27","precio":499.99}]

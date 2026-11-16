@@ -1,0 +1,28 @@
+$ kubectl port-forward svc/backend-service -n practica-s11 8080:8080
+
+=== 1. CREAR PRODUCTO 1 (POST /api/productos) ===
+$ curl.exe -i -s -X POST "http://127.0.0.1:8080/api/productos" -H "Content-Type: application/json" -d '{\"nombre\": \"Laptop Lenovo ThinkPad P16\", \"precio\": 1850.50}'
+
+HTTP/1.1 201 Created
+Content-Type: application/json
+Content-Length: 87
+
+{"id":"6afb3ae13449bc40938b46a9","nombre":"Laptop Lenovo ThinkPad P16","precio":1850.5}
+
+=== 2. CREAR PRODUCTO 2 (POST /api/productos) ===
+$ curl.exe -i -s -X POST "http://127.0.0.1:8080/api/productos" -H "Content-Type: application/json" -d '{\"nombre\": \"Monitor Dell UltraSharp 27\", \"precio\": 499.99}'
+
+HTTP/1.1 201 Created
+Content-Type: application/json
+Content-Length: 87
+
+{"id":"6afb3ae23449bc40938b46aa","nombre":"Monitor Dell UltraSharp 27","precio":499.99}
+
+=== 3. LISTAR PRODUCTOS (GET /api/productos) ===
+$ curl.exe -i -s -X GET "http://127.0.0.1:8080/api/productos"
+
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: application/json
+
+[{"id":"6afb3ae13449bc40938b46a9","nombre":"Laptop Lenovo ThinkPad P16","precio":1850.5},{"id":"6afb3ae23449bc40938b46aa","nombre":"Monitor Dell UltraSharp 27","precio":499.99}]

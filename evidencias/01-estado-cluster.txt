@@ -1,0 +1,27 @@
+$ kubectl get all,pvc,configmaps,secrets -n practica-s11
+
+NAME                                      READY   STATUS    RESTARTS   AGE
+pod/backend-deployment-7b4b86dc4f-2gv8v   1/1     Running   0          2m
+pod/mongo-deployment-59757865cf-t74fn     1/1     Running   0          2m33s
+
+NAME                      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+service/backend-service   NodePort    10.108.17.5    <none>        8080:30080/TCP   43s
+service/mongo-service     ClusterIP   10.97.41.219   <none>        27017/TCP        2m33s
+
+NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend-deployment   1/1     1            1           2m
+deployment.apps/mongo-deployment     1/1     1            1           2m33s
+
+NAME                                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/backend-deployment-7b4b86dc4f   1         1         1       2m
+replicaset.apps/mongo-deployment-59757865cf     1         1         1       2m33s
+
+NAME                              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/mongo-pvc   Bound    pvc-59300038-ac2d-4cf4-bfc9-41cbfbb0a11e   1Gi        RWO            standard       <unset>                 2m34s
+
+NAME                         DATA   AGE
+configmap/app-config         4      2m33s
+configmap/kube-root-ca.crt   1      2m34s
+
+NAME               TYPE     DATA   AGE
+secret/db-secret   Opaque   2      2m33s
